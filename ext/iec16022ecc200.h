@@ -23,5 +23,4 @@
 unsigned char *
 iec16022ecc200 (int *Wptr, int *Hptr, char **encodingptr, int barcodelen, unsigned char *barcode, int *lenp,int *maxp,int *eccp);
 
-
-
+void iec16022init(int *Wptr, int *Hptr, const char *barcode);
