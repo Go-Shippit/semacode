@@ -1,6 +1,6 @@
-= Ruby Semacode Encoder
+# Ruby Semacode Encoder
 
-== Introduction
+## Introduction
 
 This Ruby extension implements a DataMatrix encoder for Ruby. It is typically
 used to create semacodes, which are barcodes, that contain URLs. This encoder
@@ -17,47 +17,61 @@ Once you have a visual representation of the semacode, you can use a reader,
 such as those from http://semacode.org on your camera phone, to capture the
 URL embedded in the semacode and proceed directly to that web site.
 
-=== License
+### License
 
 This software is released under the terms of the GNU Public License version 2,
 available from <http://www.gnu.org>
 
-=== Contact Information
+### Contact Information
 
 You can contact me via <guido@sohne.net> if you have patches, bug fixes or
 improvements.
 
   Copyright (C) 2007, Guido Sohne
   Website: http://sohne.net/projects/semafox
-  
-=== Credits
 
-Based on the iec16022ecc200.c encoder by Adrian Kennard, Andrews & Arnold Ltd 
+### Credits
 
-== Quick Start
+Based on the iec16022ecc200.c encoder by Adrian Kennard, Andrews & Arnold Ltd
+
+## Quick Start
 
 Configure the extension to your local system and ruby
 
-  <tt>ruby extconf.rb</tt>
-  
+```
+ruby ext/extconf.rb
+```
+
 Build the extension
 
-  <tt>make</tt>
-  
+```
+make
+```
+
+Install the gem with Bundler
+
+```
+bundle install
+```
+
 Test that it works
 
-  <tt>ruby test.rb</tt>
-  
+```
+bundle exec ruby tests/test.rb
+```
+
 Install the extension (you may need to become root)
 
-  <tt>make install</tt>
-  
-You should take a look at tests/test.rb to understand how to use this. It
+```
+make install
+```
+
+You should take a look at `tests/test.rb` to understand how to use this. It
 includes some code to generate a semacode using HTML and CSS, so that could
 end up being useful.
-  
-  
-== USAGE
+
+
+## USAGE
 
 Here's some basic ways in which you can make use of this extension. It tries
 to show by example, how the semacodes can be created and what can be done with
@@ -66,76 +80,100 @@ or to a semacode object.
 
 Include this library
 
-  <tt>require 'rubygems'</tt>
-  <tt>require 'semacode'</tt>
+```ruby
+require 'rubygems'
+require 'semacode'
+```
 
 Create a semacode
 
-  <tt>semacode = Barcode::Semacode.new "http://sohne.net/projects/semafox/"</tt>
+```ruby
+semacode = Barcode::Semacode.new "http://sohne.net/projects/semafox/"
+```
 
 Return the semacode as an array of arrays of boolean
 
-  The first element of the array is the top row, the last element is the 
-  bottom row. the array length is the semacode height, and each element is 
+  The first element of the array is the top row, the last element is the
+  bottom row. the array length is the semacode height, and each element is
   an array as wide as the semacode width
 
-  <tt>grid = semacode.data</tt> or
-  <tt>grid = semacode.to_a</tt> or  
+```ruby
+  grid = semacode.data # or
+  grid = semacode.to_a
+```
 
 Return the encoding list used to create the semacode
 
   This encoding list is composed of the 'character set', complete with
   shifts from one encoding type to another, that is used for the DataMatrix
   algorithm.
-  
-  <tt>encoding = semacode.encoding</tt>
+
+```ruby
+encoding = semacode.encoding
+```
 
 Return the semacode as a string
 
   The string is a comma separated list of character vectors. Each vector is a row
   in the semacode symbol, the top row is first, and the bottom row is last. Inside
   each row, the vector reads from left to right.
-  
-  <tt>semacode.to_s</tt> or
-  <tt>semacode.to_str</tt>
+
+```ruby
+semacode.to_s # or
+semacode.to_str
+```
 
 Encode another string
 
-  <tt>semacode.encode "http://sohne.net"</tt>
+```ruby
+semacode.encode "http://sohne.net"
+```
 
 Get the width of the semacode
 
-  <tt>semacode.width</tt>
+```ruby
+semacode.width
+```
 
 Get the height of the semacode
 
-  <tt>semacode.height</tt>
+```ruby
+semacode.height
+```
 
 How long is the semacode? (width * height)
 
-  <tt>semacode.length</tt> or
-  <tt>semacode.size</tt>
+```ruby
+semacode.length # or
+semacode.size
+```
 
 Get the raw encoded length (before padding and before ECC)
 
-  <tt>semacode.raw_encoded_length</tt>
+```ruby
+semacode.raw_encoded_length
+```
 
 Get the symbol size
 
-  The max number of characters this semacode type 
+  The max number of characters this semacode type
   (specific width x height) can hold is called the
   symbol size.
 
-  <tt>semacode.symbol_size</tt>
+```ruby
+semacode.symbol_size
+```
 
 Count the ECC bytes
-  
+
   How many bytes were used for error correction?
 
-  <tt>semacode.ecc_bytes</tt>
+```ruby
+semacode.ecc_bytes
+```
 
 
-== NOTES
+## NOTES
 
 The C code can throw runtime exceptions. Be sure to include
 a catch block if you want to use this in production. Mostly
